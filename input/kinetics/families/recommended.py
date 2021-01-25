@@ -106,6 +106,8 @@ surface_development = {
 # Electrochemical families!
 electrochem = {
     'Surface_Proton_Electron_Reduction_Alpha',
+    'Surface_Proton_Electron_Reduction_Alpha_vdW',
     'Surface_Proton_Electron_Reduction_Beta',
     'Surface_Proton_Electron_Reduction_Beta_Radical',
+    
 }
