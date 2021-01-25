@@ -32,8 +32,8 @@ entry(
     label = "Adsorbate",
     group =
 """
-1 *1 R u0 {2,[S,D,T,Q]}
-2 *2 X u0 {1,[S,D,T,Q]}
+1 *1 R u0 {2,[D,T,Q]}
+2 *2 X u0 {1,[D,T,Q]}
 """,
     kinetics = None,
 )
@@ -63,8 +63,8 @@ entry(
     label = "CX",
     group =
 """
-1 *1 C u0 {2,[S,D,T,Q]}
-2 *2 X u0 {1,[S,D,T,Q]}
+1 *1 C u0 {2,[D,T,Q]}
+2 *2 X u0 {1,[D,T,Q]}
 """,
     kinetics = None,
 )
@@ -74,8 +74,8 @@ entry(
     label = "OX",
     group =
 """
-1 *1 O u0 {2,[S,D]}
-2 *2 X u0 {1,[S,D]}
+1 *1 O u0 {2,D}
+2 *2 X u0 {1,D}
 """,
     kinetics = None,
 )
@@ -86,8 +86,8 @@ entry(
     label = "NX",
     group =
 """
-1 *1 N u0 {2,[S,D,T]}
-2 *2 X u0 {1,[S,D,T]}
+1 *1 N u0 {2,[D,T]}
+2 *2 X u0 {1,[D,T]}
 """,
     kinetics = None,
 )
@@ -116,19 +116,6 @@ entry(
     kinetics = None,
 )
 
-entry(
-    index = 9,
-    label = "N=N-X",
-    group =
-"""
-1 *1 N u0 {2,S} {3,D}
-2 *2 X u0 {1,S}
-3    N u0 {1,D}
-""",
-    kinetics = None,
-)
-
-
 tree(
 """
 L1: Adsorbate
@@ -136,7 +123,6 @@ L1: Adsorbate
         L3: O=C=X
     L2: OX
     L2: NX
-        L3: N=N-X
         L3: N-N=X
 
 L1: Proton
