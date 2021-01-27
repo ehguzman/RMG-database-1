@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-name = "Surface_Proton_Electron_Reduction_Alpha_vdW/groups"
+name = "Surface_Proton_Electron_Reduction_Beta_vdW/groups"
 shortDesc = u""
 longDesc = u"""
 
-   *1                        *1-*3H
-    |  + *3H+ + *e-  ---->    :
-  ~*2~                      ~*2~~
+   *1                        *1-*4H
+   ||                        |
+   *2  + *4H+ + *e-  ---->  *2
+    :                        |
+  ~*3~                     ~*3~   
 
 The rate, which should be in mol/m2/s,
 will be given by k * (mol/m2) * (mol/m3) * 1
@@ -16,16 +18,17 @@ so k should be in (m3/mol/s).
 
 template(reactants=["Adsorbate", "Proton", "Electron"], products=["Reduced"], ownReverse=False)
 
-reverse = "Surface_Proton_Electron_Oxidation_Alpha_vdW"
+reverse = "Surface_Proton_Electron_Oxidation_vdW"
 
 reactantNum = 3
 productNum = 1
 allowChargedSpecies = True
 
 recipe(actions=[
-    ['LOSE_CHARGE', '*3', 1],
+    ['LOSE_CHARGE', '*4', 1],
     ['CHANGE_BOND', '*1', -1, '*2'],
-    ['FORM_BOND', '*1', 1, '*3'],
+    ['CHANGE_BOND', '*2', 1, '*3'],
+    ['FORM_BOND', '*1', 1, '*4'],
 ])
 
 entry(
@@ -33,8 +36,9 @@ entry(
     label = "Adsorbate",
     group =
 """
-1 *1 R u0 {2,S}
-2 *2 X u0 {1,S}
+1 *1 R!H u0 {2,[D,T]}
+2 *2 R!H u0 {1,[D,T]} 
+3 *3 Xv u0 
 """,
     kinetics = None,
 )
@@ -44,7 +48,7 @@ entry(
     label = "Proton",
     group =
 """
-1 *3 H+ u0 p0 c+1
+1 *4 H+ u0 p0 c+1
 """,
     kinetics = None,
 )
@@ -61,22 +65,24 @@ entry(
 
 entry(
     index = 4,
-    label = "CX",
+    label = "CRX",
     group =
 """
-1 *1 C u0 {2,S}
-2 *2 X u0 {1,S}
+1 *1 C u0 {2,[D,T]}
+2 *2 R!H u0 {1,[D,T]}
+3 *3 Xv u0
 """,
     kinetics = None,
 )
 
 entry(
     index = 5,
-    label = "OX",
+    label = "NRX",
     group =
 """
-1 *1 O u0 {2,S}
-2 *2 X u0 {1,S}
+1 *1 N u0 {2,[D,T]}
+2 *2 R!H u0 {1,[D,T]}
+3 *3 Xv u0
 """,
     kinetics = None,
 )
@@ -84,22 +90,24 @@ entry(
 
 entry(
     index = 6,
-    label = "NX",
+    label = "ORX",
     group =
 """
-1 *1 N u0 {2,S}
-2 *2 X u0 {1,S}
+1 *1 O u0 {2,D}
+2 *2 R!H u0 {1,D}
+3 *3 Xv u0
 """,
     kinetics = None,
 )
 
+
 tree(
 """
 L1: Adsorbate
-    L2: CX
-    L2: OX
-    L2: NX
-
+    L2: CRX
+    L2: ORX
+    L2: NRX
+    
 L1: Proton
 
 L1: Electron

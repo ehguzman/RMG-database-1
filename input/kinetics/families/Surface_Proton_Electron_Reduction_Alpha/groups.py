@@ -20,6 +20,7 @@ reverse = "Surface_Proton_Electron_Oxidation_Alpha"
 
 reactantNum = 3
 productNum = 1
+allowChargedSpecies = True
 
 recipe(actions=[
     ['LOSE_CHARGE', '*3', 1],

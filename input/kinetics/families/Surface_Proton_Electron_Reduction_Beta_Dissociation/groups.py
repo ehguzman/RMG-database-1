@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-name = "Surface_Proton_Electron_Reduction_Beta/groups"
+name = "Surface_Proton_Electron_Reduction_Beta_Dissociation/groups"
 shortDesc = u""
 longDesc = u"""
 
-   *1                        *1-*4H
-   ||                        |
-   *2  + *4H+ + *e-  ---->  *2
+   *1                       
+    |                        
+   *2  + *4H+ + *e-  ---->  *2 +  *1-*4 
     |                       ||
   ~*3~                     ~*3~   
 
@@ -16,17 +16,17 @@ will be given by k * (mol/m2) * (mol/m3) * 1
 so k should be in (m3/mol/s).
 """
 
-template(reactants=["Adsorbate", "Proton", "Electron"], products=["Reduced"], ownReverse=False)
+template(reactants=["Adsorbate", "Proton", "Electron"], products=["Reduced", "Adsorbate1"], ownReverse=False)
 
-reverse = "Surface_Proton_Electron_Oxidation_Beta"
+reverse = "Surface_Proton_Electron_Oxidation_Beta_Dissociation"
 
 reactantNum = 3
-productNum = 1
+productNum = 2
 allowChargedSpecies = True
 
 recipe(actions=[
     ['LOSE_CHARGE', '*4', 1],
-    ['CHANGE_BOND', '*1', -1, '*2'],
+    ['BREAK_BOND', '*1', 1, '*2'],
     ['CHANGE_BOND', '*2', 1, '*3'],
     ['FORM_BOND', '*1', 1, '*4'],
 ])
@@ -36,9 +36,9 @@ entry(
     label = "Adsorbate",
     group =
 """
-1 *1 R!H u0 {2,[D,T]}
-2 *2 R!H u0 {1,[D,T]} {3,[S,D]}
-3 *3 X u0 {2,[S,D]}
+1 *1 R!H u0 {2,S}
+2 *2 R!H u0 {1,S} {3,[S,D,T]}
+3 *3 X u0 {2,[S,D,T]}
 """,
     kinetics = None,
 )
@@ -68,9 +68,9 @@ entry(
     label = "CRX",
     group =
 """
-1 *1 C u0 {2,[D,T]}
-2 *2 R!H u0 {1,[D,T]} {3,[S,D]}
-3 *3 X u0 {2,[S,D]}
+1 *1 C u0 {2,S}
+2 *2 R!H u0 {1,S} {3,[S,D,T]}
+3 *3 X u0 {2,[S,D,T]}
 """,
     kinetics = None,
 )
@@ -80,9 +80,9 @@ entry(
     label = "NRX",
     group =
 """
-1 *1 N u0 {2,[D,T]}
-2 *2 R!H u0 {1,[D,T]} {3,[S,D]}
-3 *3 X u0 {2,[S,D]}
+1 *1 N u0 {2,S}
+2 *2 R!H u0 {1,S} {3,[S,D,T]}
+3 *3 X u0 {2,[S,D,T]}
 """,
     kinetics = None,
 )
@@ -93,22 +93,23 @@ entry(
     label = "ORX",
     group =
 """
-1 *1 O u0 {2,D}
-2 *2 R!H u0 {1,D} {3,[S,D]}
-3 *3 X u0 {2,[S,D]}
+1 *1 O u0 {2,S}
+2 *2 R!H u0 {1,S} {3,[S,D,T]}
+3 *3 X u0 {2,[S,D,T]}
 """,
     kinetics = None,
 )
 
 entry(
     index = 7,
-    label = "HN=N-X",
+    label = "H2N-N-X",
     group =
 """
-1 *1 N u0 {2,D} {4,S}
-2 *2 N u0 {1,D} {3,S}
+1 *1 N u0 {2,S} {4,S} {5,S}
+2 *2 N u0 {1,S} {3,S}
 3 *3 X u0 {2,S}
 4    H u0 {1,S}
+5    H u0 {1,S}
 """,
     kinetics = None,
 )
@@ -120,7 +121,7 @@ L1: Adsorbate
     L2: CRX
     L2: ORX
     L2: NRX
-        L3: HN=N-X
+        L3: H2N-N-X
 
 L1: Proton
 

@@ -11,10 +11,10 @@ entry(
     index = 1,
     label = "Adsorbate;Proton;Electron",
     kinetics = SurfaceChargeTransfer(
-        A = (2.483E21, 'cm^3/(mol*s)'), # pre-exponential factor 1E9/s / surface_site_density / [H+]0 (1M/L)
+        A = (2.483E21, 'cm^3/(mol*s)'), # pre-exponential factor 1E9/s / 1E9 cm2/mol surface_site_density / [H+]0 (1M/L)
         n = 0, # temperature coeff, 0 default
         V0 = None, # Reference potential
-        Ea = (10, 'kJ/mol'), # activation energy at the reversible potential
+        Ea = (20, 'kJ/mol'), # activation energy at the reversible potential
         Tmin = (200, 'K'),
         Tmax = (3000, 'K'),
         ne = -1, # electron stochiometric coeff
