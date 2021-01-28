@@ -23,7 +23,7 @@ entry(
     label = "water",
     molecule = "O",
     solvent = SolventData(
-        s_g = 2.743,
+        s_g = 10,
         b_g = 4.814,
         e_g = 0.822,
         l_g = -0.213,
