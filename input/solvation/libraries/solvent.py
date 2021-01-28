@@ -24,7 +24,7 @@ entry(
     molecule = "O",
     solvent = SolventData(
         s_g = 10,
-        b_g = 4.814,
+        b_g = 20,
         e_g = 0.822,
         l_g = -0.213,
         a_g = 3.904,
